@@ -1,0 +1,53 @@
+/*
+ * Projector.css
+ */
+body {
+  position: relative;
+  background-color: #000;
+  color: white;
+  height: 100vh;
+  font-family: sans-serif;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.proj-projector-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.proj-video-wrapper {
+  /* Positioned absolutely based on inline styles */
+}
+
+.proj-video-wrapper video {
+  width: 100%;
+  height: auto;
+}
+.proj-video-wrapper video::-webkit-media-controls {
+  display: none;
+}
+
+
+.proj-counter-wrapper {
+  /* Positioned absolutely based on inline styles */
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  margin: 10px;
+  padding: 2rem;
+  background-color: #FFF;
+  text-align: center;
+}
+
+.counter-display {
+  font-size: 4em;
+  color: #ff1111;
+  text-shadow: 2px 2px 4px #000;
+  /* text-shadow: #ff999955 .5rem .35rem; */
+}

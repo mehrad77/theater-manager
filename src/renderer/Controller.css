@@ -1,0 +1,49 @@
+/* Controller.css */
+.ctrl-main {
+  display: flex;
+  flex-direction: row;
+}
+
+.ctrl-controller-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+
+.ctrl-video-container,
+.ctrl-counter-container {
+  margin: 20px;
+}
+
+.ctrl-video-wrapper,
+.ctrl-counter-wrapper {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 250px;
+}
+
+.ctrl-position-controls {
+  margin-top: 10px;
+}
+
+.ctrl-position-controls label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.ctrl-counter-controls button {
+  margin: 5px;
+}
+
+.ctrl-size-controls {
+  margin-top: 10px;
+}
+
+.ctrl-size-controls label {
+  display: block;
+  margin-bottom: 5px;
+}
