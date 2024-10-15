@@ -158,8 +158,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "TheaterManager",
+    "appId": "org.erb.TheaterManager",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -218,8 +218,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "mehrad77",
+      "repo": "theater-manager"
     }
   },
   "collective": {
