@@ -13,4 +13,5 @@ export type Counter = {
   count: number;
   show: boolean;
   position: Position;
+  size: string;
 };

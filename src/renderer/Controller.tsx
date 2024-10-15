@@ -76,6 +76,15 @@ export function Controller() {
     localStorage.setItem('counters', JSON.stringify(newCounters));
   };
 
+  // Update size of a counter
+  const handleSizeCounter = (index: number, newSize: string) => {
+    const newCounters = counters.map((counter, i) =>
+      i === index ? { ...counter, size: newSize } : counter,
+    );
+    setCounters(newCounters);
+    localStorage.setItem('counters', JSON.stringify(newCounters));
+  };
+
   // Change counter value
   const handleCounterChange = (index: number, value: number) => {
     const newCounters = counters.map((counter, i) =>
@@ -251,6 +260,18 @@ export function Controller() {
                   <button onClick={() => handleResetCounter(index)}>
                     Reset
                   </button>
+                </div>
+              )}
+              {counter.show && (
+                <div className="ctrl-size-controls">
+                  <label>
+                    Height:
+                    <input
+                      type="text"
+                      value={counter.size}
+                      onChange={(e) => handleSizeCounter(index, e.target.value)}
+                    />
+                  </label>
                 </div>
               )}
             </div>

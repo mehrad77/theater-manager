@@ -31,18 +31,21 @@ export const defaultCounters = [
     count: 0,
     show: false,
     position: { top: '0%', left: '60%' },
+    size: '4em',
   },
   {
     id: 'counter-2',
     count: 0,
     show: false,
     position: { top: '30%', left: '60%' },
+    size: '4em',
   },
   {
     id: 'counter-3',
     count: 0,
     show: false,
     position: { top: '60%', left: '60%' },
+    size: '4em',
   },
 ];
 
@@ -50,8 +53,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Controller />} />
-        <Route path="/projector" element={<Projector />} />
+        <Route path="/projector" element={<Controller />} />
+        <Route path="/" element={<Projector />} />
       </Routes>
     </Router>
   );

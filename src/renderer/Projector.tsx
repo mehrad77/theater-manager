@@ -75,6 +75,7 @@ export function Projector() {
               top: counter.position.top,
               left: counter.position.left,
               position: 'absolute',
+              fontSize: counter.size,
             }}
           >
             <span className="counter-display">

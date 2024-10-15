@@ -46,7 +46,6 @@ body {
 }
 
 .counter-display {
-  font-size: 4em;
   color: #ff1111;
   text-shadow: 2px 2px 4px #000;
   /* text-shadow: #ff999955 .5rem .35rem; */
