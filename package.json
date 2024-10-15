@@ -199,7 +199,7 @@
     },
     "win": {
       "target": [
-        "msi"
+        "nsis"
       ]
     },
     "linux": {
