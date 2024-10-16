@@ -12,7 +12,7 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import MenuBuilder from './menu';
+// import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
 class AppUpdater {
@@ -95,7 +95,7 @@ const createWindows = async () => {
   });
 
   controllerWindow.loadURL(resolveHtmlPath('index.html'));
-  projectorWindow.loadURL(resolveHtmlPath('index.html') + '#/projector');
+  projectorWindow.loadURL(`${resolveHtmlPath('index.html')}#/projector`);
 
   controllerWindow.on('ready-to-show', () => {
     if (!controllerWindow) {
@@ -114,11 +114,11 @@ const createWindows = async () => {
 
   controllerWindow.on('closed', () => {
     controllerWindow = null;
-    projectorWindow = null
+    projectorWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(controllerWindow);
-  menuBuilder.buildMenu();
+  // const menuBuilder = new MenuBuilder(controllerWindow);
+  // menuBuilder.buildMenu();
 
   // Open urls in the user's browser
   controllerWindow.webContents.setWindowOpenHandler((edata) => {
