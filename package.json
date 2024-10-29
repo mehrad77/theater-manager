@@ -9,6 +9,10 @@
     "type": "git",
     "url": "git+https://github.com/mehrad77/theater-manager.git"
   },
+  "author": {
+    "name": "Mehrad",
+    "email": "mehrad@protonmail.com"
+  },
   "license": "MIT",
   "contributors": [],
   "main": "./.erb/dll/main.bundle.dev.js",
@@ -155,7 +159,7 @@
   "build": {
     "productName": "TheaterManager",
     "appId": "org.erb.TheaterManager",
-    "asar": false,
+    "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
