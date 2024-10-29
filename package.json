@@ -10,11 +10,6 @@
     "url": "git+https://github.com/mehrad77/theater-manager.git"
   },
   "license": "MIT",
-  "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
-  },
   "contributors": [],
   "main": "./.erb/dll/main.bundle.dev.js",
   "scripts": {
