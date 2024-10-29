@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        os: [windows-latest]
 
     steps:
       - name: Checkout git repo
@@ -33,9 +33,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            npm exec electron-builder -- --publish always --win --log-level debug
-          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            npm exec electron-builder -- --publish always --linux --log-level debug
-          fi
+          npm exec electron-builder -- --publish always --win --ia32 --x64
         shell: bash
