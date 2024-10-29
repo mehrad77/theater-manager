@@ -34,8 +34,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            npm exec electron-builder -- --publish always --win
+            npm exec electron-builder -- --publish always --win --log-level debug
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            npm exec electron-builder -- --publish always --linux
+            npm exec electron-builder -- --publish always --linux --log-level debug
           fi
         shell: bash
