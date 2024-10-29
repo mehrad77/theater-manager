@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { useEffect, useState } from 'react';
 // import eye1 from '../../assets/media/eye1.mp4';
 import eye2 from '../../assets/media/eye2.mp4';
@@ -5,7 +6,7 @@ import type { Counter, Video } from './types';
 
 // Projector Component
 export function Projector() {
-  const [eye, setEye] = useState<string>(
+  const [, setEye] = useState<string>(
     () => localStorage.getItem('eye') || 'eye1',
   );
 

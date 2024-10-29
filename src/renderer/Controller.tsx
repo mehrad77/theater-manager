@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-else-return */
 import { useState } from 'react';
 import type { Counter, Position, Size, Video } from './types';
-import { defaultCounters, defaultVideos } from './App';
+import { defaultCounters, defaultVideos } from './const';
 
 // Controller Component
 export function Controller() {
@@ -119,7 +122,9 @@ export function Controller() {
   return (
     <div className="ctrl-controller-container">
       <h1>Theater VFX Controller</h1>
-      <button onClick={handleResetAll}>Reset to Defaults</button>{' '}
+      <button type="button" onClick={handleResetAll}>
+        Reset to Defaults
+      </button>{' '}
       <div className="ctrl-video-name-controls" style={{ display: 'none' }}>
         <label>
           Select Eye:
@@ -251,13 +256,22 @@ export function Controller() {
               )}
               {counter.show && (
                 <div className="ctrl-counter-controls">
-                  <button onClick={() => handleCounterChange(index, 1)}>
+                  <button
+                    type="button"
+                    onClick={() => handleCounterChange(index, 1)}
+                  >
                     +
                   </button>
-                  <button onClick={() => handleCounterChange(index, -1)}>
+                  <button
+                    type="button"
+                    onClick={() => handleCounterChange(index, -1)}
+                  >
                     -
                   </button>
-                  <button onClick={() => handleResetCounter(index)}>
+                  <button
+                    type="button"
+                    onClick={() => handleResetCounter(index)}
+                  >
                     Reset
                   </button>
                 </div>

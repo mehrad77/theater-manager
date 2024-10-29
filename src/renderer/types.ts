@@ -1,5 +1,5 @@
-export type Position = { top: string; left: string; };
-export type Size = { width: string; height: string; };
+export type Position = { top: string; left: string };
+export type Size = { width: string; height: string };
 
 export type Video = {
   id: string;
