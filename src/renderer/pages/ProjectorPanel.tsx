@@ -2,14 +2,15 @@
 import { useEffect, useState } from 'react';
 // import eye1 from '../../assets/media/eye1.mp4';
 // import eye2 from '../../assets/media/eye2.mp4';
-import { ImageRenderer } from '../contents/Image';
-import { VideoRenderer } from '../contents/Video';
-import { TextRenderer } from '../contents/Text';
-import { CounterRenderer } from '../contents/Counter';
-import { Content } from '../contents/types';
+import { ImageRenderer } from '../../contents/Image';
+import { VideoRenderer } from '../../contents/Video';
+import { TextRenderer } from '../../contents/Text';
+import { CounterRenderer } from '../../contents/Counter';
+import { Content } from '../../contents/types';
+import './Projector.css';
 
 // Projector Component
-export function Projector() {
+export function ProjectorPanel() {
   const [contents, setContents] = useState<Content[]>(() => {
     const storedContents = localStorage.getItem('contents');
     return storedContents ? JSON.parse(storedContents) : [];

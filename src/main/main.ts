@@ -94,7 +94,7 @@ const createWindows = async () => {
     },
   });
 
-  controllerWindow.loadURL(resolveHtmlPath('index.html'));
+  controllerWindow.loadURL(`${resolveHtmlPath('index.html')}#/controller`);
   projectorWindow.loadURL(`${resolveHtmlPath('index.html')}#/projector`);
 
   controllerWindow.on('ready-to-show', () => {

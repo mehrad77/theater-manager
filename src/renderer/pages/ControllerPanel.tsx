@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import GridLayout from 'react-grid-layout';
-import { ImageController } from '../contents/Image';
-import { VideoController } from '../contents/Video';
-import { TextController } from '../contents/Text';
-import { CounterController } from '../contents/Counter';
+import { ImageController } from '../../contents/Image';
+import { VideoController } from '../../contents/Video';
+import { TextController } from '../../contents/Text';
+import { CounterController } from '../../contents/Counter';
 import type {
   Content,
   CounterContent,
   ImageContent,
   TextContent,
   VideoContent,
-} from '../contents/types';
+} from '../../contents/types';
+import './Controller.css';
 
 export function ControllerPanel() {
   const [contents, setContents] = useState<Content[]>(() => {
