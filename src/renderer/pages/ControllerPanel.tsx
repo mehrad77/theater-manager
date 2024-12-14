@@ -7,21 +7,13 @@ import {
   SettingsControl,
 } from '../../components';
 import { ContentControllerFactory } from '../../contents/ContentControllerFactory';
-import type {
-  Content,
-  CounterContent,
-  ImageContent,
-  TextContent,
-  VideoContent,
-} from '../../contents/types';
+import type { Content } from '../../contents/types';
 import './Controller.css';
 
 const getDefaultHeight = (type: string) => {
   switch (type) {
     case 'image':
-      return 14;
     case 'video':
-      return 14;
     case 'text':
       return 14;
     case 'counter':
@@ -56,9 +48,9 @@ export const ControllerPanel: React.FC = () => {
     setCollapsedPanels((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(id)) {
-        newSet.delete(id); // Expand
+        newSet.delete(id);
       } else {
-        newSet.add(id); // Collapse
+        newSet.add(id);
       }
       return newSet;
     });
@@ -70,7 +62,7 @@ export const ControllerPanel: React.FC = () => {
               ...content,
               layout: {
                 ...content.layout,
-                h: collapsedPanels.has(id) ? getDefaultHeight(content.type) : 3, // Adjust height dynamically
+                h: collapsedPanels.has(id) ? getDefaultHeight(content.type) : 3,
               },
             }
           : content,
@@ -89,24 +81,9 @@ export const ControllerPanel: React.FC = () => {
     updates: Partial<T>,
   ): void => {
     setContents((prevContents) =>
-      prevContents.map((content) => {
-        if (content.id === id) {
-          // Narrow down to specific content type
-          switch (content.type) {
-            case 'image':
-              return { ...content, ...updates } as ImageContent;
-            case 'video':
-              return { ...content, ...updates } as VideoContent;
-            case 'text':
-              return { ...content, ...updates } as TextContent;
-            case 'counter':
-              return { ...content, ...updates } as CounterContent;
-            default:
-              return content;
-          }
-        }
-        return content;
-      }),
+      prevContents.map((content) =>
+        content.id === id ? ({ ...content, ...updates } as T) : content,
+      ),
     );
   };
 

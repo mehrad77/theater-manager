@@ -1,15 +1,21 @@
-import React from 'react';
-import { uploadFileLocally } from '../fileUtils';
+import React, { useState } from 'react';
+import { uploadFileLocally, getFileBlob } from '../fileUtils';
 import { PositionControls, SizeControls } from '../controllers';
 import type { ControllerProps, ImageContent, RendererProps } from './types';
 
 function ImageController({ content, onUpdate }: ControllerProps<ImageContent>) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(content.fileUrl);
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (event.target.files && event.target.files[0]) {
-      const fileBlobUrl = await uploadFileLocally(event.target.files[0]);
-      onUpdate({ fileUrl: fileBlobUrl });
+      const fileId = await uploadFileLocally(event.target.files[0]);
+      const fileBlobUrl = await getFileBlob(fileId);
+      if (fileBlobUrl) {
+        onUpdate({ fileUrl: fileBlobUrl });
+        setPreviewUrl(fileBlobUrl); // Update preview
+      }
     }
   };
 
@@ -37,6 +43,19 @@ function ImageController({ content, onUpdate }: ControllerProps<ImageContent>) {
             className="file-input"
           />
         </label>
+
+        {previewUrl && (
+          <img
+            src={previewUrl}
+            alt={content.name || 'Preview'}
+            className="image-preview mt-2"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '200px',
+              border: '1px solid #ccc',
+            }}
+          />
+        )}
       </div>
     </div>
   );

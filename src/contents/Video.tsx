@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PositionControls, SizeControls } from '../controllers';
-import { uploadFileLocally } from '../fileUtils';
+import { uploadFileLocally, getFileBlob } from '../fileUtils';
 import type { ControllerProps, RendererProps, VideoContent } from './types';
 
 function VideoController({ content, onUpdate }: ControllerProps<VideoContent>) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(content.fileUrl);
+
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (event.target.files && event.target.files[0]) {
-      const fileBlobUrl = await uploadFileLocally(event.target.files[0]);
-      onUpdate({ fileUrl: fileBlobUrl });
+      const fileId = await uploadFileLocally(event.target.files[0]);
+      const fileBlobUrl = await getFileBlob(fileId);
+      if (fileBlobUrl) {
+        onUpdate({ fileUrl: fileBlobUrl });
+        setPreviewUrl(fileBlobUrl); // Update preview
+      }
     }
   };
 
@@ -38,6 +44,20 @@ function VideoController({ content, onUpdate }: ControllerProps<VideoContent>) {
           />
         </label>
 
+        {previewUrl && (
+          // eslint-disable-next-line jsx-a11y/media-has-caption
+          <video
+            src={previewUrl}
+            className="video-preview mt-2"
+            style={{
+              maxWidth: '100%',
+              maxHeight: '200px',
+              border: '1px solid #ccc',
+            }}
+            controls
+          />
+        )}
+
         <label htmlFor={`${content.id}-autoplay`}>
           Autoplay:
           <input
@@ -61,6 +81,7 @@ function VideoController({ content, onUpdate }: ControllerProps<VideoContent>) {
     </div>
   );
 }
+
 function VideoRenderer({ content }: RendererProps<VideoContent>) {
   return (
     // eslint-disable-next-line jsx-a11y/media-has-caption
