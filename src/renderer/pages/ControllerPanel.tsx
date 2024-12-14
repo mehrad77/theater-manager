@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GridLayout from 'react-grid-layout';
 import {
   AddNewContent,
@@ -6,10 +6,7 @@ import {
   PanelHeader,
   SettingsControl,
 } from '../../components';
-import { ImageController } from '../../contents/Image';
-import { VideoController } from '../../contents/Video';
-import { TextController } from '../../contents/Text';
-import { CounterController } from '../../contents/Counter';
+import { ContentControllerFactory } from '../../contents/ContentControllerFactory';
 import type {
   Content,
   CounterContent,
@@ -34,7 +31,7 @@ const getDefaultHeight = (type: string) => {
   }
 };
 
-export function ControllerPanel() {
+export const ControllerPanel: React.FC = () => {
   const [contents, setContents] = useState<Content[]>(() => {
     const storedContents = localStorage.getItem('contents');
     const parsedContents = storedContents ? JSON.parse(storedContents) : [];
@@ -46,6 +43,10 @@ export function ControllerPanel() {
       },
     }));
   });
+
+  useEffect(() => {
+    localStorage.setItem('contents', JSON.stringify(contents));
+  }, [contents]);
 
   const [collapsedPanels, setCollapsedPanels] = useState<Set<string>>(
     new Set(),
@@ -74,6 +75,12 @@ export function ControllerPanel() {
             }
           : content,
       ),
+    );
+  };
+
+  const deleteContent = (id: string) => {
+    setContents((prevContents) =>
+      prevContents.filter((content) => content.id !== id),
     );
   };
 
@@ -173,51 +180,14 @@ export function ControllerPanel() {
                   type={content.type}
                   isCollapsed={isCollapsed}
                   toggleCollapse={toggleCollapse}
+                  onDelete={deleteContent}
                 />
                 {!isCollapsed && (
                   <div className="p-2 border-t border-gray-300 no-drag">
-                    {(() => {
-                      switch (content.type) {
-                        case 'image':
-                          return (
-                            <ImageController
-                              content={content}
-                              onUpdate={(updates) =>
-                                updateContent(content.id, updates)
-                              }
-                            />
-                          );
-                        case 'video':
-                          return (
-                            <VideoController
-                              content={content}
-                              onUpdate={(updates) =>
-                                updateContent(content.id, updates)
-                              }
-                            />
-                          );
-                        case 'text':
-                          return (
-                            <TextController
-                              content={content}
-                              onUpdate={(updates) =>
-                                updateContent(content.id, updates)
-                              }
-                            />
-                          );
-                        case 'counter':
-                          return (
-                            <CounterController
-                              content={content}
-                              onUpdate={(updates) =>
-                                updateContent(content.id, updates)
-                              }
-                            />
-                          );
-                        default:
-                          return null;
-                      }
-                    })()}
+                    <ContentControllerFactory
+                      content={content}
+                      onUpdate={updateContent}
+                    />
                   </div>
                 )}
               </div>
@@ -227,4 +197,4 @@ export function ControllerPanel() {
       </div>
     </div>
   );
-}
+};

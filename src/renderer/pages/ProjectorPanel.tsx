@@ -1,11 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 import { useEffect, useState } from 'react';
-// import eye1 from '../../assets/media/eye1.mp4';
-// import eye2 from '../../assets/media/eye2.mp4';
-import { ImageRenderer } from '../../contents/Image';
-import { VideoRenderer } from '../../contents/Video';
-import { TextRenderer } from '../../contents/Text';
-import { CounterRenderer } from '../../contents/Counter';
+import { ProjectorRendererFactory } from '../../contents/ProjectorRendererFactory';
 import { Content } from '../../contents/types';
 import './Projector.css';
 
@@ -33,20 +27,9 @@ export function ProjectorPanel() {
 
   return (
     <div className="proj-projector-container">
-      {contents.map((content) => {
-        switch (content.type) {
-          case 'image':
-            return <ImageRenderer key={content.id} content={content} />;
-          case 'video':
-            return <VideoRenderer key={content.id} content={content} />;
-          case 'text':
-            return <TextRenderer key={content.id} content={content} />;
-          case 'counter':
-            return <CounterRenderer key={content.id} content={content} />;
-          default:
-            return null;
-        }
-      })}
+      {contents.map((content) => (
+        <ProjectorRendererFactory key={content.id} content={content} />
+      ))}
     </div>
   );
 }
