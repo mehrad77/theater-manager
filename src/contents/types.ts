@@ -15,14 +15,14 @@ export interface BaseContent {
 
 export interface ImageContent extends BaseContent {
   type: 'image';
-  file: string; // Base64-encoded image file
+  fileUrl: string;
 }
 
 export interface VideoContent extends BaseContent {
   type: 'video';
-  file: string; // Base64-encoded video file
-  autoplay?: boolean; // Autoplay toggle
-  loop?: boolean; // Loop playback toggle
+  fileUrl: string;
+  autoplay?: boolean;
+  loop?: boolean;
 }
 
 export interface AudioContent extends BaseContent {
