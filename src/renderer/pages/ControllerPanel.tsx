@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import GridLayout from 'react-grid-layout';
+import {
+  AddNewContent,
+  ImportExportControls,
+  PanelHeader,
+  SettingsControl,
+} from '../../components';
 import { ImageController } from '../../contents/Image';
 import { VideoController } from '../../contents/Video';
 import { TextController } from '../../contents/Text';
@@ -13,10 +19,32 @@ import type {
 } from '../../contents/types';
 import './Controller.css';
 
+const getDefaultHeight = (type: string) => {
+  switch (type) {
+    case 'image':
+      return 14;
+    case 'video':
+      return 14;
+    case 'text':
+      return 14;
+    case 'counter':
+      return 10;
+    default:
+      return 14;
+  }
+};
+
 export function ControllerPanel() {
   const [contents, setContents] = useState<Content[]>(() => {
     const storedContents = localStorage.getItem('contents');
-    return storedContents ? JSON.parse(storedContents) : [];
+    const parsedContents = storedContents ? JSON.parse(storedContents) : [];
+    return parsedContents.map((content: Content) => ({
+      ...content,
+      layout: {
+        ...content.layout,
+        h: getDefaultHeight(content.type),
+      },
+    }));
   });
 
   const [collapsedPanels, setCollapsedPanels] = useState<Set<string>>(
@@ -41,62 +69,12 @@ export function ControllerPanel() {
               ...content,
               layout: {
                 ...content.layout,
-                h: collapsedPanels.has(id) ? 6 : 2, // Adjust height dynamically
+                h: collapsedPanels.has(id) ? getDefaultHeight(content.type) : 3, // Adjust height dynamically
               },
             }
           : content,
       ),
     );
-  };
-
-  // Add testing content
-  const addTestingContent = () => {
-    const testContents: Content[] = [
-      {
-        id: `1${Date.now()}`,
-        type: 'image',
-        layout: { x: 0, y: 0, w: 4, h: 6 },
-        show: true,
-        position: { top: '10px', left: '20px' },
-        size: { width: '200px', height: '150px' },
-        file: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...',
-      } as ImageContent,
-      {
-        id: `2${Date.now()}`,
-        type: 'video',
-        layout: { x: 4, y: 0, w: 4, h: 6 },
-        show: true,
-        position: { top: '50px', left: '100px' },
-        size: { width: '400px', height: '300px' },
-        file: 'data:video/mp4;base64,AAAA...',
-        autoplay: false,
-        loop: true,
-      } as VideoContent,
-      {
-        id: `3${Date.now()}`,
-        type: 'text',
-        layout: { x: 8, y: 0, w: 4, h: 6 },
-        show: true,
-        position: { top: '150px', left: '200px' },
-        size: { width: '300px', height: '50px' },
-        text: 'Sample Text Content',
-        fontSize: '18px',
-        color: '#333333',
-        alignment: 'center',
-      } as TextContent,
-      {
-        id: `4${Date.now()}`,
-        type: 'counter',
-        layout: { x: 0, y: 1, w: 4, h: 6 },
-        show: true,
-        position: { top: '250px', left: '300px' },
-        size: { width: '100px', height: '50px' },
-        count: 5,
-        paused: false,
-      } as CounterContent,
-    ];
-
-    setContents([...contents, ...testContents]);
   };
 
   const updateContent = <T extends Content>(
@@ -130,34 +108,24 @@ export function ControllerPanel() {
       {/* Top Bar */}
       <div className="flex justify-between items-center px-4 py-2 bg-gray-800">
         <div className="flex space-x-2">
-          <button
-            type="button"
-            className="bg-indigo-500 px-4 py-2 rounded-md hover:bg-indigo-600"
-            onClick={() => console.log('Settings clicked')}
-          >
-            Settings
-          </button>
-          <button
-            type="button"
-            className="bg-yellow-500 px-4 py-2 rounded-md hover:bg-yellow-600"
-            onClick={() => console.log('Import clicked')}
-          >
-            Import
-          </button>
-          <button
-            type="button"
-            className="bg-red-500 px-4 py-2 rounded-md hover:bg-red-600"
-            onClick={() => console.log('Export clicked')}
-          >
-            Export
-          </button>
-          <button
-            type="button"
-            className="bg-purple-500 px-4 py-2 rounded-md hover:bg-purple-600"
-            onClick={addTestingContent}
-          >
-            Add Testing Content
-          </button>
+          <SettingsControl />
+          <ImportExportControls />
+        </div>
+        <div className="flex space-x-2">
+          <AddNewContent
+            addContent={(newContent) => {
+              setContents((prevContents) => [
+                ...prevContents,
+                {
+                  ...newContent,
+                  layout: {
+                    ...newContent.layout,
+                    h: getDefaultHeight(newContent.type),
+                  },
+                },
+              ]);
+            }}
+          />
         </div>
       </div>
 
@@ -165,9 +133,9 @@ export function ControllerPanel() {
       <div className="flex-1 overflow-y-auto p-4">
         <GridLayout
           className="layout"
-          cols={12}
-          rowHeight={30}
-          width={1200}
+          cols={24}
+          rowHeight={16}
+          width={window.innerWidth}
           layout={contents.map((content) => ({
             i: content.id,
             ...content.layout,
@@ -194,24 +162,20 @@ export function ControllerPanel() {
                 key={content.id}
                 data-grid={{
                   ...content.layout,
+                  minW: 4,
+                  maxW: 24,
+                  maxH: 24,
                 }}
                 className="bg-slate-700 rounded-lg shadow-md overflow-hidden"
               >
-                {/* Header */}
-                <div className="flex justify-between items-center px-4 py-2 bg-gray-800 cursor-pointer">
-                  <h3 className="text-lg font-semibold">
-                    {content.type.toUpperCase()} Controller
-                  </h3>
-                  <button
-                    type="button"
-                    onClick={() => toggleCollapse(content.id)}
-                    className="text-white no-drag"
-                  >
-                    {isCollapsed ? '▼' : '▲'}
-                  </button>
-                </div>
+                <PanelHeader
+                  id={content.id}
+                  type={content.type}
+                  isCollapsed={isCollapsed}
+                  toggleCollapse={toggleCollapse}
+                />
                 {!isCollapsed && (
-                  <div className="p-4 border-t border-gray-300">
+                  <div className="p-2 border-t border-gray-300 no-drag">
                     {(() => {
                       switch (content.type) {
                         case 'image':
