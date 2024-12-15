@@ -9,6 +9,8 @@ import {
 import { getFileBlob, revokeBlobUrl } from '../../fileUtils';
 import { ContentControllerFactory } from '../../contents/ContentControllerFactory';
 import type { Content } from '../../contents/types';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 import './Controller.css';
 
 const getDefaultHeight = (type: string) => {
@@ -122,7 +124,7 @@ export const ControllerPanel: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className="h-screen w-screen flex flex-col font-sans">
       {/* Top Bar */}
       <div className="flex justify-between items-center px-4 py-2 bg-gray-800">
         <div className="flex space-x-2">

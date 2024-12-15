@@ -85,11 +85,10 @@ function CounterRenderer({ content }: RendererProps<CounterContent>) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        border: '1px solid black',
-        fontSize: '20px',
+        fontSize: content.fontSize,
       }}
     >
-      {content.paused ? 'Paused' : content.count}
+      {content.count}
     </div>
   );
 }

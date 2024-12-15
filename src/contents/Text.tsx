@@ -60,7 +60,7 @@ function TextRenderer({ content }: RendererProps<TextContent>) {
         color: content.color,
         // textAlign: content.alignment as 'left' | 'center' | 'right',
       }}
-      className="flex items-center justify-center border border-gray-300"
+      className="flex items-center justify-center"
     >
       {content.text}
     </div>

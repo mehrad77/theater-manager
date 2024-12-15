@@ -1,7 +1,5 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import 'react-grid-layout/css/styles.css';
-import 'react-resizable/css/styles.css';
 import { ControllerPanel } from './pages/ControllerPanel';
 import { ProjectorPanel } from './pages/ProjectorPanel';
 

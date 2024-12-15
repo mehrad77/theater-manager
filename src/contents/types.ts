@@ -3,14 +3,14 @@ export type Position = { top: string; left: string }; // Position coordinates fo
 export type Size = { width: string; height: string }; // Size dimensions for content
 
 // Content Types
-export interface BaseContent {
-  id: string; // Unique identifier for the content
-  name?: string; // Name of the content
-  type: 'image' | 'video' | 'audio' | 'text' | 'counter'; // Type of content
-  show: boolean; // Visibility toggle
-  position: Position; // Content's position on screen
-  size: Size; // Dimensions of the content
-  layout?: any; // for positioning in the controller grid
+interface BaseContent {
+  id: string;
+  name?: string;
+  type: 'image' | 'video' | 'audio' | 'text' | 'counter';
+  show: boolean;
+  position: Position;
+  size: Size;
+  layout?: any;
 }
 
 export interface ImageContent extends BaseContent {
@@ -28,22 +28,24 @@ export interface VideoContent extends BaseContent {
 
 export interface AudioContent extends BaseContent {
   type: 'audio';
-  file: string; // Base64-encoded audio file
-  autoplay?: boolean; // Autoplay toggle
-  loop?: boolean; // Loop playback toggle
-  volume: number; // Volume level (0 to 100)
+  file: string;
+  autoplay?: boolean;
+  loop?: boolean;
+  volume: number;
 }
 
 export interface TextContent extends BaseContent {
   type: 'text';
-  text: string; // The text string to display
-  fontSize: string; // Font size (e.g., "16px")
-  color: string; // Font color (e.g., "#000000")
+  text: string;
+  fontSize: string;
+  color: string;
 }
 
 export interface CounterContent extends BaseContent {
   type: 'counter';
   count: number;
+  fontSize: string;
+  color: string;
   paused: boolean;
 }
 
