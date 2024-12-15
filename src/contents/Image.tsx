@@ -10,7 +10,7 @@ function ImageController({ content, onUpdate }: ControllerProps<ImageContent>) {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (event.target.files && event.target.files[0]) {
-      const fileId = await uploadFileLocally(event.target.files[0]);
+      const fileId = await uploadFileLocally(event.target.files[0], content);
       const fileBlobUrl = await getFileBlob(fileId);
       if (fileBlobUrl) {
         onUpdate({ fileUrl: fileBlobUrl });
@@ -21,7 +21,6 @@ function ImageController({ content, onUpdate }: ControllerProps<ImageContent>) {
 
   return (
     <div className="controller-item">
-      {content.name && <h3>{content.name}</h3>}
       <div className="inside">
         <PositionControls
           id={content.id}

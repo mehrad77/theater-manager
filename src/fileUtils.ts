@@ -1,4 +1,5 @@
 import { openDB } from 'idb';
+import type { Content } from './contents/types';
 
 const DB_NAME = 'MediaStore';
 const STORE_NAME = 'media';
@@ -15,19 +16,21 @@ async function getDb() {
 }
 
 // Upload file to IndexedDB
-export async function uploadFileLocally(file: File): Promise<string> {
+export async function uploadFileLocally(
+  file: File,
+  content: Content,
+): Promise<string> {
   const fileBlob = await file.arrayBuffer();
-  const id = crypto.randomUUID();
   const db = await getDb();
 
   await db.put(STORE_NAME, {
-    id,
+    id: content.id,
     fileBlob,
     type: file.type, // Store MIME type for correct Blob reconstruction
     name: file.name, // Optional for display
   });
 
-  return id;
+  return content.id;
 }
 
 // Retrieve file and create Blob URL

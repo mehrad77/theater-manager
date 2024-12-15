@@ -18,7 +18,6 @@ function CounterController({
 
   return (
     <div className="controller-item">
-      {content.name && <h3>{content.name}</h3>}
       <div className="inside no-drag">
         <PositionControls
           id={content.id}

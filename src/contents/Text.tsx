@@ -8,9 +8,6 @@ import type { ControllerProps, RendererProps, TextContent } from './types';
 function TextController({ content, onUpdate }: ControllerProps<TextContent>) {
   return (
     <div className="controller-item">
-      {content.name && (
-        <h3 className="text-lg font-semibold">{content.name}</h3>
-      )}
       <div className="inside no-drag space-y-4">
         <PositionControls
           id={content.id}

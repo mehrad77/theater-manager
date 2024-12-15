@@ -6,6 +6,7 @@ import {
   PanelHeader,
   SettingsControl,
 } from '../../components';
+import { getFileBlob } from '../../fileUtils';
 import { ContentControllerFactory } from '../../contents/ContentControllerFactory';
 import type { Content } from '../../contents/types';
 import './Controller.css';
@@ -24,17 +25,44 @@ const getDefaultHeight = (type: string) => {
 };
 
 export const ControllerPanel: React.FC = () => {
-  const [contents, setContents] = useState<Content[]>(() => {
-    const storedContents = localStorage.getItem('contents');
-    const parsedContents = storedContents ? JSON.parse(storedContents) : [];
-    return parsedContents.map((content: Content) => ({
-      ...content,
-      layout: {
-        ...content.layout,
-        h: getDefaultHeight(content.type),
-      },
-    }));
-  });
+  const [contents, setContents] = useState<Content[]>([]);
+
+  // Load contents with file URLs
+  useEffect(() => {
+    const loadContents = async () => {
+      const storedContents = localStorage.getItem('contents');
+      if (storedContents) {
+        const parsedContents: Content[] = JSON.parse(storedContents);
+
+        // Fetch file URLs from IndexedDB
+        const updatedContents = await Promise.all(
+          parsedContents.map(async (content) => {
+            if ('fileUrl' in content && content.fileUrl) {
+              const fileBlobUrl = await getFileBlob(content.id);
+              return {
+                ...content,
+                fileUrl: fileBlobUrl || content.fileUrl, // Use Blob URL if available
+                layout: {
+                  ...content.layout,
+                  h: getDefaultHeight(content.type),
+                },
+              };
+            }
+            return {
+              ...content,
+              layout: {
+                ...content.layout,
+                h: getDefaultHeight(content.type),
+              },
+            };
+          }),
+        );
+        setContents(updatedContents);
+      }
+    };
+
+    loadContents();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('contents', JSON.stringify(contents));
@@ -154,10 +182,12 @@ export const ControllerPanel: React.FC = () => {
               >
                 <PanelHeader
                   id={content.id}
+                  name={content.name || content.id}
                   type={content.type}
                   isCollapsed={isCollapsed}
                   toggleCollapse={toggleCollapse}
                   onDelete={deleteContent}
+                  onRename={(id, name) => updateContent(id, { name })}
                 />
                 {!isCollapsed && (
                   <div className="p-2 border-t border-gray-300 no-drag">
