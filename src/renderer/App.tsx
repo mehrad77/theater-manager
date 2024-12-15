@@ -18,6 +18,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<h1>Hello Dünya!</h1>} />
         <Route path="/controller" element={<ControllerPanel />} />
         <Route path="/projector" element={<ProjectorPanel />} />
       </Routes>
