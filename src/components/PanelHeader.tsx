@@ -1,10 +1,11 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
+import { Content } from '../contents/types';
 
 interface PanelHeaderProps {
   id: string;
   name: string;
-  type: string;
+  type: Content['type'];
   isCollapsed: boolean;
   toggleCollapse: (id: string) => void;
   onDelete: (id: string) => void;

@@ -6,7 +6,7 @@ import {
   PanelHeader,
   SettingsControl,
 } from '../../components';
-import { getFileBlob } from '../../fileUtils';
+import { getFileBlob, revokeBlobUrl } from '../../fileUtils';
 import { ContentControllerFactory } from '../../contents/ContentControllerFactory';
 import type { Content } from '../../contents/types';
 import './Controller.css';
@@ -98,12 +98,18 @@ export const ControllerPanel: React.FC = () => {
     );
   };
 
-  const deleteContent = (id: string) => {
+  const deleteContent = async (id: string) => {
+    const contentToDelete = contents.find((content) => content.id === id);
+    if (
+      contentToDelete &&
+      (contentToDelete.type === 'video' || contentToDelete.type === 'image')
+    ) {
+      await revokeBlobUrl(id);
+    }
     setContents((prevContents) =>
       prevContents.filter((content) => content.id !== id),
     );
   };
-
   const updateContent = <T extends Content>(
     id: string,
     updates: Partial<T>,
