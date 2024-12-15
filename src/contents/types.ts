@@ -21,6 +21,7 @@ export interface ImageContent extends BaseContent {
 export interface VideoContent extends BaseContent {
   type: 'video';
   fileUrl: string;
+  playing: boolean;
   autoplay?: boolean;
   loop?: boolean;
 }
