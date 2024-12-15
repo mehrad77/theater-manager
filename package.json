@@ -31,6 +31,9 @@
     "start:main": "concurrently -k \"cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --watch --config ./.erb/configs/webpack.config.main.dev.ts\" \"electronmon .\"",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
+    "build:web": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.web.ts",
+    "serve:web": "npx serve dist-web",
+    "deploy:web": "npm run build:web && gh-pages -d dist-web",
     "test": "jest"
   },
   "browserslist": [
